@@ -130,6 +130,7 @@ h1 em { color: var(--coral); font-style: normal; }
 h2 { margin-bottom: 0; font-family: "Space Grotesk", sans-serif; font-size: 1.5rem; letter-spacing: -0.05em; }
 .form-number { color: var(--coral); font-family: "Space Grotesk", sans-serif; font-size: 0.9rem; font-weight: 700; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 13px; }
+.description-field { grid-column: 1 / -1; }
 .field { display: grid; gap: 8px; color: var(--muted); font-size: 0.75rem; font-weight: 600; }
 .field input, .field select {
   width: 100%;
@@ -207,13 +208,13 @@ h2 { margin-bottom: 0; font-family: "Space Grotesk", sans-serif; font-size: 1.5r
   .total-card, .expense-form { min-height: 0; }
   .total-card { min-height: 215px; }
   .form-grid { grid-template-columns: 1fr 1fr; }
-  .amount-field { grid-column: 1 / -1; }
+  .description-field, .amount-field { grid-column: 1 / -1; }
 }
 
 @media (max-width: 440px) {
   h1 { font-size: 3.25rem; }
   .form-grid { grid-template-columns: 1fr; }
-  .amount-field { grid-column: auto; }
+  .description-field, .amount-field { grid-column: auto; }
   .expense-row { align-items: flex-start; }
   .expense-actions { align-items: flex-end; flex-direction: column; gap: 3px; }
 }

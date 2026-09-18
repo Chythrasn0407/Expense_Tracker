@@ -3,6 +3,7 @@ const currency = new Intl.NumberFormat("en-IN", { style: "currency", currency: "
 const dateFormatter = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" });
 
 const form = document.querySelector("#expense-form");
+const descriptionInput = document.querySelector("#description");
 const amountInput = document.querySelector("#amount");
 const categoryInput = document.querySelector("#category");
 const dateInput = document.querySelector("#date");
@@ -19,15 +20,17 @@ renderExpenses();
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
+  const description = descriptionInput.value.trim();
   const amount = Number.parseFloat(amountInput.value);
 
-  if (!Number.isFinite(amount) || amount <= 0 || !dateInput.value) {
-    message.textContent = "Enter an amount greater than zero and choose a date.";
+  if (!description || !Number.isFinite(amount) || amount <= 0 || !dateInput.value) {
+    message.textContent = "Add a description, an amount greater than zero, and a date.";
     return;
   }
 
   expenses.unshift({
     id: crypto.randomUUID(),
+    description,
     amount,
     category: categoryInput.value,
     date: dateInput.value,
@@ -73,21 +76,22 @@ function renderExpenses() {
 }
 
 function createExpenseMarkup(expense) {
+  const safeDescription = escapeHtml(expense.description || expense.category);
   const safeCategory = escapeHtml(expense.category);
   const formattedDate = dateFormatter.format(new Date(`${expense.date}T12:00:00`));
-  const categoryLetter = safeCategory.charAt(0).toUpperCase();
+  const categoryLetter = safeDescription.charAt(0).toUpperCase();
   return `
     <article class="expense-row">
       <div class="expense-info">
         <span class="category-mark" aria-hidden="true">${categoryLetter}</span>
         <div>
-          <p class="expense-name">${safeCategory}</p>
-          <p class="expense-date">${formattedDate}</p>
+          <p class="expense-name">${safeDescription}</p>
+          <p class="expense-date">${safeCategory} &middot; ${formattedDate}</p>
         </div>
       </div>
       <div class="expense-actions">
         <p class="expense-amount">${currency.format(expense.amount)}</p>
-        <button class="delete-button" type="button" data-id="${expense.id}" aria-label="Delete ${safeCategory} expense">&times;</button>
+        <button class="delete-button" type="button" data-id="${expense.id}" aria-label="Delete ${safeDescription} expense">&times;</button>
       </div>
     </article>`;
 }
