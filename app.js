@@ -26,6 +26,7 @@ form.addEventListener("submit", (event) => {
   const data = readForm();
 
   if (!data.description || !data.date || data.quantity < 1 || !Number.isFinite(data.amount) || data.amount <= 0) {
+    message.className = "form-message error-message";
     message.textContent = "Enter an item, valid quantity, amount, and date.";
     return;
   }
@@ -37,6 +38,8 @@ form.addEventListener("submit", (event) => {
     expenses.push({ id: crypto.randomUUID(), ...data });
     message.textContent = "Expense added.";
   }
+
+  message.className = "form-message success-message";
 
   saveExpenses();
   resetForm();
@@ -100,7 +103,7 @@ function createExpenseMarkup(expense) {
   const safeCategory = escapeHtml(expense.category);
   const formattedDate = dateFormatter.format(new Date(`${expense.date}T12:00:00`));
   const categoryLetter = safeDescription.charAt(0).toUpperCase();
-  const details = [expense.vendor, expense.paymentMode, `Qty ${expense.quantity}`, expense.remarks]
+  const details = [expense.vendor, expense.paymentMode, `Qty ${expense.quantity} ${expense.quantityUnit}`, expense.remarks]
     .filter(Boolean)
     .map(escapeHtml)
     .join(" · ");
@@ -133,6 +136,7 @@ function readForm() {
     description: document.querySelector("#description").value.trim(),
     date: dateInput.value,
     quantity: Number(document.querySelector("#quantity").value),
+    quantityUnit: document.querySelector("#quantityUnit").value,
     amount: Number.parseFloat(document.querySelector("#amount").value),
     paymentMode: document.querySelector("#paymentMode").value,
     vendor: document.querySelector("#vendor").value.trim(),
@@ -229,6 +233,7 @@ function normalizeExpense(expense) {
     description: String(expense.description || ""),
     date: expense.date || today(),
     quantity: Number(expense.quantity) || 1,
+    quantityUnit: expense.quantityUnit || "pcs",
     amount: Number(expense.amount) || 0,
     paymentMode: expense.paymentMode || "Other",
     vendor: String(expense.vendor || ""),

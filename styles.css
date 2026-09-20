@@ -164,6 +164,8 @@ h2 { margin-bottom: 0; font-family: "Space Grotesk", sans-serif; font-size: 1.5r
 }
 .primary-button:hover { background: var(--mint-dark); transform: translateY(-2px); }
 .form-message { min-height: 18px; margin: 10px 0 0; color: var(--coral); font-size: 0.75rem; }
+.success-message { color: var(--mint-dark); }
+.error-message { color: var(--coral); }
 
 .section-heading { margin-bottom: 21px; }
 .section-heading h2 span { color: var(--muted); font-size: 0.9rem; font-weight: 500; }
