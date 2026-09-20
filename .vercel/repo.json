@@ -1,0 +1,11 @@
+{
+  "remoteName": "origin",
+  "projects": [
+    {
+      "id": "prj_zUDbFJAySicAYfL0kzB3uraVPP4X",
+      "name": "expense_tracker",
+      "directory": ".",
+      "orgId": "team_lYzdc7bcE1ailtEgKVpL2PRl"
+    }
+  ]
+}
